@@ -84,12 +84,12 @@ def PatternMatching(Pattern, Genome):
             positions.append(i)
     return positions
 
-
+#########################################################################
 # I need this to print out the solution for Bioinformatics Hacker Track
 # The code is in Python 3
-data = PatternMatching(Pattern, Genome)
-print(*data, sep=' ')
-
+#data = PatternMatching(Pattern, Genome)
+#print(*data, sep=' ')
+#########################################################################
 # Compute the Hamming distance between two strings p and q
 # Input:  Two strings p and q of the same length
 # Output: An integer value representing the Hamming Distance between p and q.
