@@ -153,6 +153,17 @@ def MinimumSkew(Genome):
     # your code here
     return positions
 
+# Input:  A DNA string Genome
+# Output: A list containing all integers i maximizing Skew(Prefix_i(Text)) over all values of i (from 0 to |Genome|)
+def MaximumSkew(Genome):
+    positions = [] # output variable
+    max_skew = max(Skew(Genome).values())
+    for i, k in Skew(Genome).items():
+        if k == max_skew:
+            positions.append(i)
+    # your code here
+    return positions
+
 # Input:  Strings Pattern and Text along with an integer d
 # Output: A list containing all starting positions where Pattern appears
 # as a substring of Text with at most d mismatches
