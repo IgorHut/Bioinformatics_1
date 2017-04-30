@@ -73,3 +73,35 @@ def Pr(Text, Profile):
    for i in range(len(Text)):
         p *= Profile[Text[i]][i]
    return p
+
+# Input:  String Text, an integer k, and profile matrix Profile
+# Output: A Profile-most probable k-mer in Text,
+# i.e. ProfileMostProbablePattern(Text, k, Profile)
+def ProfileMostProbablePattern(Text, k, Profile):
+    most_prob = Text[0:k] 
+    p_max = Pr(Text[0:k], Profile)
+    for i in range(1, len(Text) - k + 1):
+         if Pr(Text[i:i+k], Profile) > p_max:
+                p_max = Pr(Text[i:i+k], Profile)
+                most_prob = Text[i:i+k]        
+    return most_prob       
+                                   
+# Input:  A list of kmers Dna, and integers k and t (where t is the number of kmers in Dna)
+# Output: GreedyMotifSearch(Dna, k, t)
+def GreedyMotifSearch(Dna, k, t):
+    #Initialise best_motifs as a list featuring the 
+    #first k-mer from each dna string:
+    BestMotifs = []
+    for i in range(0, t):
+        BestMotifs.append(Dna[i][0:k])
+        
+    n = len(Dna[0])
+    for i in range(n-k+1):
+        Motifs = []
+        Motifs.append(Dna[0][i:i+k])
+        for j in range(1, t):
+            P = Profile(Motifs[0:j])
+            Motifs.append(ProfileMostProbablePattern(Dna[j], k, P))
+        if Score(Motifs) < Score(BestMotifs):
+            BestMotifs = Motifs
+    return BestMotifs
