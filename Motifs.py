@@ -105,3 +105,47 @@ def GreedyMotifSearch(Dna, k, t):
         if Score(Motifs) < Score(BestMotifs):
             BestMotifs = Motifs
     return BestMotifs
+
+# Input:  A set of kmers Motifs
+# Output: CountWithPseudocounts(Motifs)
+def CountWithPseudocounts(Motifs):
+    t = len(Motifs)
+    k = len(Motifs[0])
+    count = {} # initializing the count dictionary
+    # Filling the dictionary with adequate number of zeroes
+    for symbol in "ACGT":
+        count[symbol] = []
+        for j in range(k):
+             count[symbol].append(0)
+    # filling in the dictionary with pseudocunts
+    for i in range(t):
+        for j in range(k):
+            symbol = Motifs[i][j]
+            count[symbol][j] += 1
+    #add 1 to every position to obtain pseudo count
+    for symbol in 'ACGT':
+        for j in range(k):
+            count[symbol][j] += 1
+    return count
+
+# Input:  A set of kmers Motifs
+# Output: ProfileWithPseudocounts(Motifs)
+def ProfileWithPseudocounts(Motifs):
+    t = len(Motifs)
+    k = len(Motifs[0])
+    profile = {} # output variable
+    # Filling the dictionary with adequate number of zeroes
+    for symbol in "ACGT":
+        profile[symbol] = []
+        for j in range(k):
+             profile[symbol].append(0)
+    count = CountWithPseudocounts(Motifs)
+    sum = 0
+    for i in 'ACGT':
+        sum = sum + count[i][0]
+    for i in 'ACGT':
+        for j in range(k):
+            profile[i][j] = count[i][j]/sum
+    
+    return profile
+
