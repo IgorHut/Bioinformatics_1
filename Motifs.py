@@ -149,3 +149,68 @@ def ProfileWithPseudocounts(Motifs):
     
     return profile
 
+# Input:  A list of kmers Dna, and integers k and t (where t is the number of kmers in Dna)
+# Output: GreedyMotifSearch(Dna, k, t)
+def GreedyMotifSearchWithPseudocounts(Dna, k, t):
+    BestMotifs = [] # output variable
+    for i in range(0, t):
+        BestMotifs.append(Dna[i][0:k])
+        
+    n = len(Dna[0])
+    for i in range(n-k+1):
+        Motifs = []
+        Motifs.append(Dna[0][i:i+k])
+        for j in range(1, t):
+            P = ProfileWithPseudocounts(Motifs[0:j])
+            Motifs.append(ProfileMostProbablePattern(Dna[j], k, P))
+        if Score(Motifs) < Score(BestMotifs):
+            BestMotifs = Motifs
+    return BestMotifs
+    return BestMotifs
+
+# Input:  A profile matrix Profile and a list of strings Dna
+# Output: Motifs(Profile, Dna)
+def Motifs(Profile, Dna):
+    # insert your code here
+    k = len(Profile['A'])
+    Motifs = []
+    for i in range(len(Dna)):
+        Motifs.append(ProfileMostProbablePattern(Dna[i], k, Profile))
+    return(Motifs)
+
+# Input:  A list of strings Dna, and integers k and t
+# Output: RandomMotifs(Dna, k, t)
+# HINT:   You might not actually need to use t since t = len(Dna), but you may find it convenient
+def RandomMotifs(Dna, k, t):
+    # place your code here.
+    random_motifs = []
+    # t = len(Dna)
+    for i in range(t):
+        rand = random.randint(0, len(Dna[0])-(k+1))
+        random_motifs.append(Dna[i][rand:(rand + k)])
+    return(random_motifs)
+
+# import the random package here
+import random
+# Input:  Positive integers k and t, followed by a list of strings Dna
+# Output: RandomizedMotifSearch(Dna, k, t)
+def RandomizedMotifSearch(Dna, k, t):
+    # insert your code here
+    M = RandomMotifs(Dna, k, t)
+    BestMotifs = M
+    while True:
+        Profile = ProfileWithPseudocounts(M)
+        M = Motifs(Profile, Dna)
+        if Score(M) < Score(BestMotifs):
+            BestMotifs = M
+        else:
+            return BestMotifs 
+        
+# Input: A dictionary Probabilities, where keys are k-mers and values are the probabilities of these k-mers (which do not necessarily sum up to 1)
+# Output: A normalized dictionary where the probability of each k-mer was divided by the sum of all k-mers' probabilities
+def Normalize(Probabilities):
+    sum_val = sum(Probabilities.values()) 
+    for key, value in Probabilities.items():
+        Probabilities[key] = value/sum_val
+    return Probabilities
+
