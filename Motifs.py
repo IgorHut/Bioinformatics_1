@@ -149,6 +149,7 @@ def ProfileWithPseudocounts(Motifs):
     
     return profile
 
+<<<<<<< refs/remotes/origin/master
 # Input:  A list of kmers Dna, and integers k and t (where t is the number of kmers in Dna)
 # Output: GreedyMotifSearch(Dna, k, t)
 def GreedyMotifSearchWithPseudocounts(Dna, k, t):
@@ -209,8 +210,59 @@ def RandomizedMotifSearch(Dna, k, t):
 # Input: A dictionary Probabilities, where keys are k-mers and values are the probabilities of these k-mers (which do not necessarily sum up to 1)
 # Output: A normalized dictionary where the probability of each k-mer was divided by the sum of all k-mers' probabilities
 def Normalize(Probabilities):
+=======
+
+# Input: A dictionary Probabilities, where keys are k-mers and values are the probabilities of these k-mers (which do not necessarily sum up to 1)
+# Output: A normalized dictionary where the probability of each k-mer was divided by the sum of all k-mers' probabilities
+def Normalize(Probabilities):
+    # your code here
+ # your code here
+>>>>>>> Added two more functions
     sum_val = sum(Probabilities.values()) 
     for key, value in Probabilities.items():
         Probabilities[key] = value/sum_val
     return Probabilities
 
+<<<<<<< refs/remotes/origin/master
+=======
+
+# first, import the random package
+import random
+# Input:  A dictionary Probabilities whose keys are k-mers and whose values are the probabilities of these kmers
+# Output: A randomly chosen k-mer with respect to the values in Probabilities
+#def WeightedDie(Probabilities):
+#    kmer = '' # output variable
+#    # your code here
+#    p = random.uniform(0,1)
+#    start = 0
+#    for key, value in Probabilities.items():
+#        end = start + value
+#        if p > start and p <= end:
+#            kmer = key
+#        start += value    
+#    return kmer
+
+#EVEN BETTER
+# Input:  A dictionary Probabilities whose keys are k-mers and whose values are the probabilities of these kmers
+# Output: A randomly chosen k-mer with respect to the values in Probabilities
+def WeightedDie(Probabilities):
+    p = random.uniform(0,1)
+    limit = 0
+    for key, value in Probabilities.items():
+        limit += value
+        if limit > p:
+            return key
+        
+# Input:  A string Text, a profile matrix Profile, and an integer k
+# Output: ProfileGeneratedString(Text, profile, k)
+def ProfileGeneratedString(Text, profile, k):
+    # your code here
+    n = len(Text)
+    probabilities = {} 
+    for i in range(0,n-k+1):
+        probabilities[Text[i:i+k]] = Pr(Text[i:i+k], profile)
+    probabilities = Normalize(probabilities)
+    return WeightedDie(probabilities)
+
+
+>>>>>>> Added two more functions

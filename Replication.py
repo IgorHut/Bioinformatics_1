@@ -182,3 +182,4 @@ def ApproximatePatternCount(Pattern, Text, d):
         if HammingDistance(Pattern, Text[i:i+len(Pattern)]) <= d:
             count = count+1
     return count
+    
